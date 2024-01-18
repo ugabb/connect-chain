@@ -20,7 +20,7 @@ type Props = {}
 const SelectField = (props: Props) => {
     return (
         <Select>
-            <SelectTrigger className="w-[500px]">
+            <SelectTrigger className="w-full">
                 <SelectValue placeholder="Link" />
             </SelectTrigger>
             <SelectContent className='w-[500px]'>
@@ -30,7 +30,6 @@ const SelectField = (props: Props) => {
                             <Image src={"/images/" + option.icon} width={16} height={16} alt='' />
                             <p>{option.name}</p>
                         </div>
-                        <Separator className='mt-1'/>
                     </SelectItem>
                 ))}
             </SelectContent>
