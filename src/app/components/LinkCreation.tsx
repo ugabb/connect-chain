@@ -3,17 +3,20 @@ import React from 'react'
 import SelectField from './inputs/SelectField'
 import TextField from './inputs/TextField'
 
-type Props = {}
+type Props = {
+    removeLink: () => void;
+    length: number
+}
 
-const LinkCreation = (props: Props) => {
+const LinkCreation = ({ removeLink, length }: Props) => {
     return (
         <div className='flex flex-col gap-3 bg-lightGrey p-3 rounded-xl'>
             <div className="flex justify-between">
                 <div className="flex gap-2">
                     <Image src={"/images/icon-drag-and-drop.svg"} alt='icon order' width={12} height={12} />
-                    <p className='font-bold text-grey'>Link #1</p>
+                    <p className='font-bold text-grey'>Link # {length}</p>
                 </div>
-                <p className='text-grey'>Remove</p>
+                <p className='text-grey cursor-pointer hover:text-purple' onClick={removeLink}>Remove</p>
             </div>
 
             <label className='text-xs'>
