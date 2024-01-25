@@ -1,4 +1,4 @@
-import Header from "./components/Header";
+
 import TabsNavigation from "./components/navigation/TabsNavigation";
 
 export default function Home() {

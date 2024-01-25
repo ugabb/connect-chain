@@ -2,12 +2,15 @@
 
 import React, { InputHTMLAttributes, useState } from 'react';
 import Image from 'next/image';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     icon?: string | "none";
+    register: UseFormRegister<FieldValues>;
+    registerName: string
 }
 
-const TextField: React.FC<Props> = ({ icon, ...props }: Props) => {
+const TextField: React.FC<Props> = ({ icon, register, registerName, ...props }: Props) => {
     const [onFocus, setOnFocus] = useState<boolean>(false);
 
     return (
@@ -18,6 +21,7 @@ const TextField: React.FC<Props> = ({ icon, ...props }: Props) => {
                 className='w-full outline-none'
                 onFocus={() => setOnFocus(true)}
                 onBlur={() => setOnFocus(false)}
+                {...register(registerName)}
                 {...props}
             />
         </div>
