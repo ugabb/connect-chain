@@ -9,12 +9,13 @@ import React from 'react'
 import Button from "../buttons/Button"
 import Customize from "./Customize"
 import ProfileDetails from "./ProfileDetails"
+import Preview from "./Preview"
 
 type Props = {}
 
 const TabsNavigation = (props: Props) => {
     return (
-        <Tabs defaultValue="account" className="w-full bg-lightGrey">
+        <Tabs defaultValue="navigation" className="w-full bg-lightGrey">
             <TabsList className="grid w-full grid-cols-4 bg-white">
                 <TabsTrigger value="" className="pointer-events-none"><Image width={16} height={16} alt='link icon' src={"/images/logo-devlinks-small.svg"} /></TabsTrigger>
                 <TabsTrigger value="customize"><Image width={16} height={16} alt='link icon' src={"/images/icon-link.svg"} /></TabsTrigger>
@@ -28,7 +29,7 @@ const TabsNavigation = (props: Props) => {
                 <ProfileDetails />
             </TabsContent>
             <TabsContent value="preview">
-                preview
+                <Preview />
             </TabsContent>
         </Tabs>
     )
