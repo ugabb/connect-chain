@@ -8,19 +8,9 @@ export const authOptions = {
       credentials: {
         username: { label: "username", type: "text", placeholder: "jsmith" },
         password: { label: "password", type: "password" },
-        
       },
-cookie: {
-    name: "next-auth.session-token",
-    options: {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      path: "/",
-    },
-  },
+      //@ts-ignore
       async authorize(credentials, req) {
-        // console.log("entrou",req);
         const response = await fetch("http://localhost:8080/api/users/login", {
           method: "POST",
           body: JSON.stringify({
@@ -33,11 +23,9 @@ cookie: {
         if (response.ok) {
           const user = await response.json();
           if (response.ok && user) {
-            console.log({ user });
-            return user;
+            return { user: user.user, accessToken: user.accessToken };
           }
         } else {
-          console.log("deu errado irmao");
           return null;
         }
       },
@@ -45,24 +33,15 @@ cookie: {
   ],
   // secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
-      console.log(token, user, account, profile, isNewUser);
-      // if (account) {
-      //   token.accessToken = account.access_token
-      //   token.id = profile.id
-      // }
+    async jwt({ token, user }: any) {
       if (user) {
         token.user = user;
       }
-      console.log(token, user, account, profile, isNewUser);
       return token;
     },
-    async session({ session, token }) {
-      session.user = token.user;
-      session.access_token = token?.user.accessToken
-      // session.accessToken = token.user.accessToken;
-      // session.user.id = token.id;
-      console.log(session, token);
+    async session({ session, token }: any) {
+      session.user = token.user.user;
+      session.access_token = token.user.accessToken;
       return session;
     },
   },

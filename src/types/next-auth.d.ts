@@ -5,8 +5,11 @@ declare module "next-auth" {
     user: {
       id: string;
       username: string;
-      accessToken: string;
+      email: string;
+      name: string;
+      profileImage: string;
+      // accessToken: string;
     };
-    access_token: string;
+    access_token?: string;
   }
 }
