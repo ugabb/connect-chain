@@ -17,4 +17,22 @@ const handleSignOut = async () => {
   }
 };
 
-export { handleSignOut };
+const handleGetAllUsers = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/api/users", {
+      method: "GET",
+      credentials: "include", // Include credentials
+    });
+    if (!response.ok) {
+      console.log(response.status, response.statusText);
+    }
+    if (response.ok) {
+      console.log(await response.json());
+    }
+    return response.json();
+  } catch (error) {
+    console.log("All users", error);
+  }
+};
+
+export { handleSignOut, handleGetAllUsers };

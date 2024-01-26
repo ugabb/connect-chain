@@ -45,26 +45,6 @@ const Login = (props: Props) => {
         }
     }
 
-    const handleGetAllUsers = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/api/users", {
-                method: "GET",
-                credentials: "include", // Include credentials
-            });
-            if (!response.ok) {
-                console.log(response.status, response.statusText);
-            }
-            if (response.ok) {
-                console.log(await response.json());
-            }
-            return response.json();
-        } catch (error) {
-            console.log("All users", error);
-        }
-    };
-
-
-
 
     return (
         <div className='p-5 flex flex-col gap-5'>
@@ -91,8 +71,7 @@ const Login = (props: Props) => {
                 <p className='text-grey'>Don't have an account</p>
                 <Link href={'/sign-up'} className='text-purple hover:underline'>Create Account</Link>
             </div>
-            <button onClick={handleGetAllUsers}>GET ALL USERS</button>
-            <button onClick={() => handleSignOut()}>Sign OUT</button>
+            {/* <button onClick={() => handleSignOut()}>Sign OUT</button> */}
         </div>
     )
 }
