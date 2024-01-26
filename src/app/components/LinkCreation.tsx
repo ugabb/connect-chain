@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import SelectField from './inputs/SelectField'
 import TextField from './inputs/TextField'
+import { useForm } from 'react-hook-form'
 
 type Props = {
     removeLink: () => void;
@@ -9,6 +10,7 @@ type Props = {
 }
 
 const LinkCreation = ({ removeLink, length }: Props) => {
+    const {register} = useForm()
     return (
         <div className='flex flex-col gap-3 bg-lightGrey p-3 rounded-xl'>
             <div className="flex justify-between">
@@ -26,7 +28,7 @@ const LinkCreation = ({ removeLink, length }: Props) => {
 
             <label className='text-xs'>
                 Link
-                <TextField placeholder='e.g. https://www.github.com/' />
+                <TextField register={register} registerName=''  placeholder='e.g. https://www.github.com/' />
             </label>
         </div>
     )
