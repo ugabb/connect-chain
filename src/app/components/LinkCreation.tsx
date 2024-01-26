@@ -6,11 +6,12 @@ import { useForm } from 'react-hook-form'
 
 type Props = {
     removeLink: () => void;
-    length: number
+    length: number;
+    registerName: string
 }
 
-const LinkCreation = ({ removeLink, length }: Props) => {
-    const {register} = useForm()
+const LinkCreation = ({ registerName, removeLink, length }: Props) => {
+    const { register } = useForm()
     return (
         <div className='flex flex-col gap-3 bg-lightGrey p-3 rounded-xl'>
             <div className="flex justify-between">
@@ -28,7 +29,7 @@ const LinkCreation = ({ removeLink, length }: Props) => {
 
             <label className='text-xs'>
                 Link
-                <TextField register={register} registerName=''  placeholder='e.g. https://www.github.com/' />
+                <TextField register={register} registerName={registerName} placeholder='e.g. https://www.github.com/' />
             </label>
         </div>
     )
