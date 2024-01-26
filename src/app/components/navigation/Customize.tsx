@@ -37,7 +37,7 @@ const Customize = (props: Props) => {
             {links.length > 0 ?
                 <div className="flex flex-col gap-8">
                     {links.map((link, i) => (
-                        <LinkCreation length={i + 1} removeLink={() => handleRemoveLink(link.id)} />
+                        <LinkCreation registerName={`link ${i + 1}`} key={i} length={i + 1} removeLink={() => handleRemoveLink(link.id)} />
                     ))}
                 </div>
                 :
