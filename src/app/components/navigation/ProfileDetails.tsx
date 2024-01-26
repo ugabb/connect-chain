@@ -3,10 +3,12 @@ import React from 'react'
 import TextField from '../inputs/TextField'
 import { Separator } from '@/components/ui/separator'
 import Button from '../buttons/Button'
+import { useForm } from 'react-hook-form'
 
 type Props = {}
 
 const ProfileDetails = (props: Props) => {
+    const { register } = useForm()
     return (
         <div className="flex flex-col gap-10 p-5 m-3 rounded-xl bg-white">
             <div className="flex flex-col gap-3">
@@ -30,15 +32,15 @@ const ProfileDetails = (props: Props) => {
                 <div className="flex flex-col gap-3 bg-lightGrey p-5 rounded-lg">
                     <label className='text-xs'>
                         First Name*
-                        <TextField icon='none' />
+                        <TextField register={register} registerName='firstName' icon='none' />
                     </label>
                     <label className='text-xs'>
                         Last Name*
-                        <TextField icon='none' />
+                        <TextField register={register} registerName='lastName' icon='none' />
                     </label>
                     <label className='text-xs'>
                         Email*
-                        <TextField icon='none' />
+                        <TextField register={register} registerName='email' icon='none' />
                     </label>
                 </div>
             </form>
