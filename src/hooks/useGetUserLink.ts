@@ -20,7 +20,8 @@ function useGetAllLinksByUser() {
       return data;
     } catch (error) {
       console.error(error);
-      throw new Error("Failed to fetch data");
+      setLinksLoading(false);
+      console.error("Failed to fetch data");
     }
   };
 
