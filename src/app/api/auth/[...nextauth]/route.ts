@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
@@ -21,9 +21,9 @@ export const authOptions = {
         });
 
         if (response.ok) {
-          const user = await response.json();
-          if (response.ok && user) {
-            return { user: user.user, accessToken: user.accessToken };
+          const session: Session = await response.json();
+          if (response.ok && session) {
+            return { user: session.user, accessToken: session.access_token };
           }
         } else {
           return null;
