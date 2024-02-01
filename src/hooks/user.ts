@@ -19,7 +19,7 @@ const handleSignOut = async () => {
 
 const handleGetAllUsers = async () => {
   try {
-    const response = await fetch("http://localhost:8080/api/users", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/users`, {
       method: "GET",
       credentials: "include", // Include credentials
     });

@@ -6,10 +6,19 @@ declare module "next-auth" {
       id: string;
       username: string;
       email: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       profileImage: string;
       // accessToken: string;
     };
     access_token?: string;
+  }
+  interface User {
+    id: string;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    profileImage: string;
   }
 }
