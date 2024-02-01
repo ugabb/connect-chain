@@ -1,62 +1,77 @@
 [
     {
         "name": "GitHub",
-        "icon": "icon-github.svg"
+        "icon": "icon-github.svg",
+        "color": "#1A1A1A"
     },
     {
         "name": "Frontend Mentor",
-        "icon": "icon-frontend-mentor.svg"
+        "icon": "icon-frontend-mentor.svg",
+        "color": "#FFFFFF"
     },
     {
         "name": "Instagram",
-        "icon": "icon-frontend-mentor.svg"
+        "icon": "icon-frontend-mentor.svg",
+        "color": "#E1306C"
     },
     {
         "name": "Twitter",
-        "icon": "icon-twitter.svg"
+        "icon": "icon-twitter.svg",
+        "color": "#43B7E9"
     },
     {
         "name": "LinkedIn",
-        "icon": "icon-linkedin.svg"
+        "icon": "icon-linkedin.svg",
+        "color": "#43B7E9"
     },
     {
         "name": "YouTube",
-        "icon": "icon-youtube.svg"
+        "icon": "icon-youtube.svg",
+        "color": "#EE3939"
     },
     {
         "name": "Facebook",
-        "icon": "icon-facebook.svg"
+        "icon": "icon-facebook.svg",
+        "color": "#2442AC"
     },
     {
         "name": "Twitch",
-        "icon": "icon-twitch.svg"
+        "icon": "icon-twitch.svg",
+        "color": "#EE3FC8"
     },
     {
         "name": "Dev.to",
-        "icon": "icon-devto.svg"
+        "icon": "icon-devto.svg",
+        "color": "#333333"
     },
     {
         "name": "Codewars",
-        "icon": "icon-codewars.svg"
+        "icon": "icon-codewars.svg",
+        "color": "#8A1A50"
     },
     {
         "name": "Codepen",
-        "icon": "icon-codepen.svg"
+        "icon": "icon-codepen.svg",
+        "color": "#"
     },
     {
         "name": "freeCodeCamp",
-        "icon": "icon-freecodecamp.svg"
+        "icon": "icon-freecodecamp.svg",
+        "color": "#302267"
     },
     {
         "name": "GitLab",
-        "icon": "icon-gitlab.svg"
+        "icon": "icon-gitlab.svg",
+        "color": "#EB4925"
     },
     {
         "name": "Hashnode",
-        "icon": "icon-hashnode.svg"
+        "icon": "icon-hashnode.svg",
+        "color": "#0330D1"
     },
     {
         "name": "Stack Overflow",
-        "icon": "icon-stack-overflow.svg"
+        "icon": "icon-stack-overflow.svg",
+        "color": "#EC7100"
     }
 ]
