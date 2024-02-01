@@ -7,7 +7,17 @@ import LinkCreation from '../LinkCreation';
 import { useForm, SubmitHandler, useFieldArray, FieldValues } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import { useGetAllLinksByUser } from '@/hooks/useGetUserLink';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { AiOutlineCheck, AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useSaveAllLinksByUser } from '@/hooks/useSaveAllLinks';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 type Props = {};
 
@@ -33,12 +43,6 @@ const Customize = (props: Props) => {
         }
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log(data.links);
-        setLinks(data.links);
-        saveLinks(data.links)
-        setEditIndex(null); // Reset edit mode
-    };
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -58,7 +62,15 @@ const Customize = (props: Props) => {
 
     const { data: session } = useSession()
     const username = session?.user.username
-    // api
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        console.log(data.links);
+        setLinks(data.links);
+        if (username) {
+            handleSaveAllLinks(data.links, username)
+        }
+        setEditIndex(null); // Reset edit mode
+    };
 
     const { getAllLinksByUser, linksLoading } = useGetAllLinksByUser();
     const handleGetAllLinksByUser = async () => {
@@ -67,52 +79,25 @@ const Customize = (props: Props) => {
             setLinks(data);
             // Set the default values for the 'links' field after fetching data
             setValue('links', data)
-
-            // try {
-            //     const { data, linksLoading } = await useGetAllLinksByUser(username);
-            //     setLinks(data);
-            //     // Set the default values for the 'links' field after fetching data
-            //     setValue('links', data)
-            // } catch (error) {
-            //     console.error(error);
-            // }
         }
     };
 
-    async function saveLinks(links: ILinks[]) {
-        try {
-            const response = await fetch(process.env.NEXT_PUBLIC_API + `/api/links/save-all/user/${username}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(links),
-            });
+    const { saveAllLinks, saveLoading } = useSaveAllLinksByUser()
 
-            if (!response.ok) {
-                // Check for any HTTP status codes outside the 2xx range
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const responseData = await response.json();
-            console.log(responseData);
-
-            // You can return responseData or perform additional actions here
-            return responseData;
-        } catch (error) {
-            console.error("Error while saving links:", error);
-            // You can throw the error again if you want to propagate it to the caller
-            // throw error;
+    const handleSaveAllLinks = async (links: ILinks[], username: string) => {
+        if (links.length) {
+            const linksSaved = await saveAllLinks(links, username);
+            setLinks(linksSaved)
+            setValue('links', linksSaved)
         }
     }
-
 
 
     useEffect(() => {
         handleGetAllLinksByUser()
     }, [])
     useEffect(() => {
-        console.log(links, fields)
+        console.log({ links }, { fields })
     }, [links, fields])
 
     return (
@@ -146,13 +131,37 @@ const Customize = (props: Props) => {
 
                 <div className="flex flex-col gap-3">
                     <Separator />
-                    <Button name="Save" variant="default" type="submit" disabled={fields?.length <= 0} />
+
+                    {/* Dialo to wating to save links */}
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button name="Save" variant="default" type="submit" disabled={fields?.length <= 0} />
+                        </DialogTrigger>
+                        <DialogContent className='flex flex-col justify-center items-center'>
+                            <DialogHeader>
+                                <DialogTitle className=' text-purple text-2xl'>Save Links</DialogTitle>
+                            </DialogHeader>
+                            {saveLoading ?
+                                <DialogDescription className='flex gap-3 items-center'>
+                                    <h2 className='text-xl text-purple'>Saving Links</h2>
+                                    <AiOutlineLoading3Quarters className='text-3xl animate-spin  text-purple' />
+                                </DialogDescription>
+                                :
+                                <DialogDescription className='flex gap-3 items-center'>
+                                    <h2 className='text-xl text-purple'>Saved</h2>
+                                    <AiOutlineCheck className='text-3xl  text-purple' />
+                                </DialogDescription>
+                            }
+                        </DialogContent>
+                    </Dialog>
                 </div>
 
                 {/* <select name="test" id="test" {...register("links[0].platform")}>
                     <option value="3">3</option>
                 </select> */}
             </form>
+
+
         </div>
     );
 };
