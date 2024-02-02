@@ -52,7 +52,7 @@
     {
         "name": "Codepen",
         "icon": "icon-codepen.svg",
-        "color": "#"
+        "color": "#000"
     },
     {
         "name": "freeCodeCamp",

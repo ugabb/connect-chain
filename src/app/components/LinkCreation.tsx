@@ -5,6 +5,8 @@ import { Control, FieldValues, UseFormRegister } from 'react-hook-form'
 import options from "../data/selectData.json"
 import { CiCircleRemove } from 'react-icons/ci'
 import Image from 'next/image'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { FormControl, FormField, FormItem } from '@/components/ui/form'
 
 type Props = {
     removeLink: () => void;
@@ -17,7 +19,7 @@ type Props = {
     defaultSelectvalue: string;
 };
 
-const LinkCreation = ({ registerNameInput, registerNameSelect, register, removeLink, length, defaultInputvalue, defaultSelectvalue }: Props) => {
+const LinkCreation = ({ registerNameInput, registerNameSelect, register, removeLink, length, defaultInputvalue, defaultSelectvalue, control }: Props) => {
     return (
         <div className='flex flex-col gap-3 bg-lightGrey p-3 rounded-xl'>
             <div className="flex justify-between">
@@ -35,7 +37,7 @@ const LinkCreation = ({ registerNameInput, registerNameSelect, register, removeL
             <label className='text-xs'>
                 Platform
 
-                <select
+                {/* <select
                     defaultValue={defaultSelectvalue}
                     {...register(registerNameSelect)}
                     className="appearance-none border border-greyBorder hover:purple rounded-lg w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline focus:ring-purple focus:border-purple"
@@ -50,7 +52,36 @@ const LinkCreation = ({ registerNameInput, registerNameSelect, register, removeL
                             <p>{op.name}</p>
                         </option>
                     ))}
-                </select>
+                </select> */}
+
+                <FormField
+                    control={control}
+                    name={registerNameSelect}
+                    render={({ field }) => (
+                        <FormItem>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Select a platform" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {options.map((op) => (
+                                            <SelectItem value={op.name}>
+                                                <div className="flex gap-3 items-center">
+                                                    <Image src={`/images/${op.icon}`} height={16} width={16} alt={op.icon} />
+                                                    <p>{op.name}</p>
+                                                </div>
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </FormItem>
+                    )}
+                />
+
 
             </label>
 
@@ -60,7 +91,7 @@ const LinkCreation = ({ registerNameInput, registerNameSelect, register, removeL
                 Link
                 <TextField defaultValue={defaultInputvalue} register={register} registerName={registerNameInput} placeholder='e.g. https://www.github.com/' />
             </label>
-        </div>
+        </div >
     );
 }
 

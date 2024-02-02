@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog"
 import { ILinks } from '@/interfaces/ILink';
 import platforms from "../../data/selectData.json"
+import { Form, FormField } from '@/components/ui/form';
 
 type Props = {};
 
@@ -107,9 +108,9 @@ const Customize = (props: Props) => {
     useEffect(() => {
         handleGetAllLinksByUser()
     }, [])
-    useEffect(() => {
-        console.log({ links }, { fields })
-    }, [links, fields])
+    // useEffect(() => {
+    //     console.log({ links }, { fields })
+    // }, [links, fields])
 
     return (
         <div className="flex flex-col gap-10 p-5 m-3 rounded-xl bg-white">
@@ -119,58 +120,63 @@ const Customize = (props: Props) => {
             </div>
             <Button variant="outline" name="+ Add new link" onClick={handleAddLink} />
 
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
-                {!linksLoading && fields?.map((link, index) => (
-                    <LinkCreation
-                        key={link.id}
-                        register={register}
-                        registerNameInput={`links[${index}].url`}
-                        registerNameSelect={`links[${index}].platform`}
-                        removeLink={() => handleRemoveLink(link.id)}
-                        length={index + 1}
-                        control={control}
-                        defaultInputvalue={link.url}
-                        defaultSelectvalue={link.platform}
-                    />
-                ))}
-                {linksLoading &&
-                    <div className='flex flex-col justify-center items-center text-purple gap-3 m-20'>
-                        <AiOutlineLoading3Quarters className='text-4xl animate-spin' />
-                        <p className='text-sm'>checking for links...</p>
+            <Form {...useForm({ register, handleSubmit, control, setValue, watch })}>
+
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+                    {!linksLoading && fields?.map((link, index) => (
+                        <LinkCreation
+                            key={link.id}
+                            register={register}
+                            registerNameInput={`links[${index}].url`}
+                            registerNameSelect={`links[${index}].platform`}
+                            removeLink={() => handleRemoveLink(link.id)}
+                            length={index + 1}
+                            control={control}
+                            defaultInputvalue={link.url}
+                            defaultSelectvalue={link.platform}
+                        />
+                    ))}
+                    {linksLoading &&
+                        <div className='flex flex-col justify-center items-center text-purple gap-3 m-20'>
+                            <AiOutlineLoading3Quarters className='text-4xl animate-spin' />
+                            <p className='text-sm'>checking for links...</p>
+                        </div>
+                    }
+
+                    <div className="flex flex-col gap-3">
+                        <Separator />
+
+                        {/* Dialo to wating to save links */}
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button name="Save" variant="default" type="submit" disabled={fields?.length <= 0} />
+                            </DialogTrigger>
+                            <DialogContent className='flex flex-col justify-center items-center'>
+                                <DialogHeader>
+                                    <DialogTitle className=' text-purple text-2xl'>Save Links</DialogTitle>
+                                </DialogHeader>
+                                {saveLoading ?
+                                    <DialogDescription className='flex gap-3 items-center'>
+                                        <h2 className='text-xl text-purple'>Saving Links</h2>
+                                        <AiOutlineLoading3Quarters className='text-3xl animate-spin  text-purple' />
+                                    </DialogDescription>
+                                    :
+                                    <DialogDescription className='flex gap-3 items-center'>
+                                        <h2 className='text-xl text-purple'>Saved</h2>
+                                        <AiOutlineCheck className='text-3xl  text-purple' />
+                                    </DialogDescription>
+                                }
+                            </DialogContent>
+                        </Dialog>
                     </div>
-                }
 
-                <div className="flex flex-col gap-3">
-                    <Separator />
-
-                    {/* Dialo to wating to save links */}
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button name="Save" variant="default" type="submit" disabled={fields?.length <= 0} />
-                        </DialogTrigger>
-                        <DialogContent className='flex flex-col justify-center items-center'>
-                            <DialogHeader>
-                                <DialogTitle className=' text-purple text-2xl'>Save Links</DialogTitle>
-                            </DialogHeader>
-                            {saveLoading ?
-                                <DialogDescription className='flex gap-3 items-center'>
-                                    <h2 className='text-xl text-purple'>Saving Links</h2>
-                                    <AiOutlineLoading3Quarters className='text-3xl animate-spin  text-purple' />
-                                </DialogDescription>
-                                :
-                                <DialogDescription className='flex gap-3 items-center'>
-                                    <h2 className='text-xl text-purple'>Saved</h2>
-                                    <AiOutlineCheck className='text-3xl  text-purple' />
-                                </DialogDescription>
-                            }
-                        </DialogContent>
-                    </Dialog>
-                </div>
-
-                {/* <select name="test" id="test" {...register("links[0].platform")}>
+                    {/* <select name="test" id="test" {...register("links[0].platform")}>
                     <option value="3">3</option>
                 </select> */}
-            </form>
+                </form>
+
+            </Form>
+
 
 
         </div>
