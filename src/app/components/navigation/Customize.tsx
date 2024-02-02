@@ -30,8 +30,6 @@ export type FormData = {
 const Customize = (props: Props) => {
     const [links, setLinks] = useState<ILinks[]>([]);
 
-    const [editIndex, setEditIndex] = useState<number | null>(null); // Keep track of the index being edited
-
     const { register, handleSubmit, control, setValue, watch } = useForm({
         defaultValues: {
             links: links
@@ -79,20 +77,10 @@ const Customize = (props: Props) => {
             }
         });
 
-
-        console.log(updatedLinks);
-
-        // const formattedLinks: ILinks[] = data.links.map((link: ILinks) => ({
-        //     platform: link.platform.name,
-        //     icon: link.platform.icon,
-        //     color: link.platform.color,
-        //     url: link.url
-        // }))
-        // setLinks(formattedLinks);
-        // if (username) {
-        //     handleSaveAllLinks(data.links, username)
-        // }
-        setEditIndex(null); // Reset edit mode
+        setLinks(updatedLinks);
+        if (username) {
+            handleSaveAllLinks(updatedLinks, username)
+        }
     };
 
     const { getAllLinksByUser, linksLoading } = useGetAllLinksByUser();

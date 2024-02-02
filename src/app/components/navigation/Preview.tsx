@@ -25,8 +25,11 @@ const Preview = (props: Props) => {
     useEffect(() => {
         handleGetAllLinksByUser()
     }, [])
+    useEffect(() => {
+        console.log(links)
+    }, [links])
     return (
-        <div className='flex flex-col justify-center items-center p-3 bg-white'>
+        <div className='flex flex-col items-center p-3 bg-gradient-to-t from-purple/30 h-screen'>
             <div className='flex justify-center items-center gap-5'>
                 <Button name='Back to Editor' variant='outline' />
 
@@ -49,8 +52,9 @@ const Preview = (props: Props) => {
                         :
                         <div className="flex flex-col gap-5">
                             {links?.map(link => (
-                                <Link href={link.url} target='_blank' className={`flex gap-20 justify-between items-center p-4 rounded-lg bg-[${link.color}]`} key={link.platform}>
+                                <Link href={link.url} target='_blank' className={`flex gap-20 justify-between items-center p-4 rounded-lg  hover:shadow-md hover:shadow-purple/50 hover:scale-105 transition-all `} style={{ backgroundColor: link.color }} key={link.platform}>
                                     <div className="flex gap-3">
+                                        <Image src={`/images/${link.iconName}.svg`} className='fill-white' width={20} height={20} alt={link.iconName} />
                                         <p className='text-white'>{link.platform}</p>
                                     </div>
                                     <Image src={'/images/icon-arrow-right.svg'} width={20} height={20} alt='arrow right icon' />
