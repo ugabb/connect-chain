@@ -19,6 +19,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { ILinks } from '@/interfaces/ILink';
+import platforms from "../../data/selectData.json"
 
 type Props = {};
 
@@ -45,7 +46,9 @@ const Customize = (props: Props) => {
 
     const handleAddLink = () => {
         if (session?.user.id) {
-            append({ platform: '', url: '', userId: session.user.id });
+            append({
+                platform: '', url: '', userId: session.user.id, color: "", iconName: ""
+            });
         }
     };
 
@@ -57,12 +60,38 @@ const Customize = (props: Props) => {
     const { data: session } = useSession()
     const username = session?.user.username
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log(data.links);
-        setLinks(data.links);
-        if (username) {
-            handleSaveAllLinks(data.links, username)
-        }
+    const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
+        // Created an array to store updated links.
+        const updatedLinks: ILinks[] = [];
+
+        data.links.forEach((link) => {
+            // For each link, find the respective platform data from the platforms array.
+            const platformData = platforms.find((plat) => plat.name === link.platform);
+            // Verify if it was found.
+            if (platformData) {
+                // Update the link to include color and iconName.
+                const updatedLink = {
+                    ...link,
+                    color: platformData.color,
+                    iconName: platformData.icon.slice(0, platformData.icon.indexOf(".svg")), // Cutting out the ".svg" part.
+                };
+                updatedLinks.push(updatedLink);
+            }
+        });
+
+
+        console.log(updatedLinks);
+
+        // const formattedLinks: ILinks[] = data.links.map((link: ILinks) => ({
+        //     platform: link.platform.name,
+        //     icon: link.platform.icon,
+        //     color: link.platform.color,
+        //     url: link.url
+        // }))
+        // setLinks(formattedLinks);
+        // if (username) {
+        //     handleSaveAllLinks(data.links, username)
+        // }
         setEditIndex(null); // Reset edit mode
     };
 

@@ -1,11 +1,8 @@
 // LinkCreation.tsx
 import React from 'react'
-import SelectField from './inputs/SelectField'
 import TextField from './inputs/TextField'
 import { Control, FieldValues, UseFormRegister } from 'react-hook-form'
-import { ILinks } from './navigation/Customize'
 import options from "../data/selectData.json"
-import Image from 'next/image'
 import { CiCircleRemove } from 'react-icons/ci'
 
 type Props = {
@@ -43,7 +40,7 @@ const LinkCreation = ({ registerNameInput, registerNameSelect, register, removeL
                     className="appearance-none border border-greyBorder rounded-lg w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline focus:ring-purple focus:border-purple"
                 >
                     <option value="" className="text-gray-500">Select</option>
-                    {options.map(op => (
+                    {options.map((op) => (
                         <option
                             key={op.name}
                             value={op.name}
