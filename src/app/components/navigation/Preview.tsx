@@ -3,8 +3,8 @@ import Button from '../buttons/Button'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useGetAllLinksByUser } from '@/hooks/useGetUserLink'
-import { ILinks } from './Customize'
 import Link from 'next/link'
+import { ILinks } from '@/interfaces/ILink'
 
 type Props = {}
 
@@ -31,7 +31,7 @@ const Preview = (props: Props) => {
                 <Button name='Back to Editor' variant='outline' />
 
                 {/* NEXT_PUBLIC_API/user-link-chain/{username} */}
-                <Button name='Share Link' variant='default' /> 
+                <Button name='Share Link' variant='default' />
             </div>
 
             <div className="flex flex-col justify-center items-center gap-5 mt-16">
@@ -49,7 +49,7 @@ const Preview = (props: Props) => {
                         :
                         <div className="flex flex-col gap-5">
                             {links?.map(link => (
-                                <Link href={link.url} target='_blank' className='flex gap-20 justify-between items-center p-4 rounded-lg bg-purple'>
+                                <Link href={link.url} target='_blank' className={`flex gap-20 justify-between items-center p-4 rounded-lg bg-[${link.color}]`} key={link.platform}>
                                     <div className="flex gap-3">
                                         <p className='text-white'>{link.platform}</p>
                                     </div>

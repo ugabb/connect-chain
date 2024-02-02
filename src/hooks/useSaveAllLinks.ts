@@ -1,4 +1,5 @@
-import { ILinks } from "@/app/components/navigation/Customize";
+
+import { ILinks } from "@/interfaces/ILink";
 import { useState } from "react";
 
 function useSaveAllLinksByUser() {

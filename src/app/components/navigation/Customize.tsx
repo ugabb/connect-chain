@@ -18,15 +18,9 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { ILinks } from '@/interfaces/ILink';
 
 type Props = {};
-
-export interface ILinks {
-    id?: number;
-    platform: string;
-    url: string;
-    userId?: string;
-}
 
 export type FormData = {
     links: ILinks[];
